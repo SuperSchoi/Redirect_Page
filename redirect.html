@@ -1,0 +1,24 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>앱 스토어 자동 연결</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf('android') > -1) {
+                window.location.href = 'https://play.google.com/store/apps/details?id=com.iwilldrive.android';
+            } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
+                window.location.href = 'https://apps.apple.com/kr/app/%EC%9A%B4%EC%A0%84%EA%B2%B0%EC%8B%AC/id1532367997';
+            } else {
+                // 기본: App Store로 이동
+                window.location.href = 'https://apps.apple.com/kr/app/%EC%9A%B4%EC%A0%84%EA%B2%B0%EC%8B%AC/id1532367997';
+            }
+        });
+    </script>
+</head>
+<body>
+    <p>잠시만 기다려 주세요... 앱 스토어로 연결 중입니다.</p>
+</body>
+</html>
