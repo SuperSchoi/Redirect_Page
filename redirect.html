@@ -4,6 +4,16 @@
 <head>
     <meta charset='UTF-8'>
     <title>앱 스토어 자동 연결</title>
+    
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-370043649');
+</script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var ua = navigator.userAgent.toLowerCase();
@@ -12,7 +22,6 @@
             } else if (ua.indexOf('iphone') > -1 || ua.indexOf('ipad') > -1 || ua.indexOf('ipod') > -1) {
                 window.location.href = 'https://apps.apple.com/kr/app/%EC%9A%B4%EC%A0%84%EA%B2%B0%EC%8B%AC/id1532367997';
             } else {
-                // 기본: App Store로 이동
                 window.location.href = 'https://apps.apple.com/kr/app/%EC%9A%B4%EC%A0%84%EA%B2%B0%EC%8B%AC/id1532367997';
             }
         });
