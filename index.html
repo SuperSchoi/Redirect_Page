@@ -1,13 +1,13 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>앱 스토어 자동 연결</title>
+  <title>운전결심 다운로드</title>
 
-  <!-- Google Analytics (GA4) -->
-  https://www.googletagmanager.com/gtag/js?id=G-7T3TMF2P41</script>
+  <!-- GA4 Google tag (gtag.js) -->
+  <script/www.googletagmanager.com/gtag/js?id=G-7T3TMF2P41</script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -15,88 +15,30 @@
     gtag('config', 'G-7T3TMF2P41', { send_page_view: true });
   </script>
 
-  <style>
-    body { font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; padding: 24px; }
-    .wrap { max-width: 520px; margin: 0 auto; }
-    .btn { display:block; padding:14px 16px; border-radius:12px; margin:10px 0; text-align:center; text-decoration:none; font-weight:700; }
-    .ios { background:#000; color:#fff; }
-    .aos { background:#34A853; color:#0b1; }
-    .etc { background:#eee; color:#111; }
-    small { color:#666; }
-  </style>
-
   <script>
     function detectOS() {
       const ua = (navigator.userAgent || "").toLowerCase();
-
-      // Android
       if (ua.includes("android")) return "android";
-
-      // iOS (iPhone/iPad/iPod)
       const isIOSUA = /iphone|ipad|ipod/.test(ua);
-
-      // iPadOS가 Mac처럼 보이는 케이스 보완: 터치포인트가 많은데 Mac으로 보이는 경우
-      const isIPadOS = (ua.includes("macintosh") && navigator.maxTouchPoints && navigator.maxTouchPoints > 1);
-
-      if (isIOSUA || isIPadOS) return "ios";
-
-      return "other";
+      const isIPadOS = ua.includes("macintosh") && navigator.maxTouchPoints && navigator.maxTouchPoints > 1;
+      return (isIOSUA || isIPadOS) ? "ios" : "other";
     }
 
-    function redirectWithAnalytics(targetUrl, platform) {
-      // GA가 막혀있거나 느려도 결국 이동하도록 안전장치 포함
-      const HARD_TIMEOUT = 1200;
+    function redirectNow(url) { window.location.replace(url); }
 
-      // 이벤트 전송 후 이동 (이벤트가 전송되면 callback 실행)
-      try {
-        gtag('event', 'store_redirect', {
-          platform: platform,
-          event_callback: function() { window.location.href = targetUrl; },
-          event_timeout: HARD_TIMEOUT
-        });
-
-        // callback이 안 불리는 경우 대비
-        setTimeout(function(){ window.location.href = targetUrl; }, HARD_TIMEOUT);
-      } catch (e) {
-        window.location.href = targetUrl;
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const ANDROID_URL = 'https://play.google.com/store/apps/details?id=com.iwilldrive.android';
-      const IOS_URL = 'https://apps.apple.com/kr/app/%EC%9A%B4%EC%A0%84%EA%B2%B0%EC%8B%AC/id1532367997';
+    document.addEventListener("DOMContentLoaded", function () {
+      const ANDROID_URL = "https://play.google.com/store/apps/details?id=com.iwilldrive.android";
+      const IOS_URL = "https://apps.apple.com/kr/app/%EC%9A%B4%EC%A0%84%EA%B2%B0%EC%8B%AC/id1532367997";
+      const WEB_URL = "https://www.yesidrive.com/";
 
       const os = detectOS();
-
-      // 자동 이동 전 500ms 정도만 대기(안내 문구 읽을 시간 + GA 전송 여유)
-      const SOFT_DELAY = 500;
-
-      if (os === "android") {
-        document.getElementById("msg").textContent = "Android 기기입니다. Google Play로 이동 중입니다…";
-        setTimeout(() => redirectWithAnalytics(ANDROID_URL, "android"), SOFT_DELAY);
-      } else if (os === "ios") {
-        document.getElementById("msg").textContent = "iOS 기기입니다. App Store로 이동 중입니다…";
-        setTimeout(() => redirectWithAnalytics(IOS_URL, "ios"), SOFT_DELAY);
-      } else {
-        // 데스크톱/기타는 자동 이동하지 않고 선택 UI 제공
-        document.getElementById("msg").textContent = "기기 OS를 확인할 수 없어요. 아래에서 스토어를 선택해 주세요.";
-        document.getElementById("buttons").style.display = "block";
-      }
+      if (os === "android") redirectNow(ANDROID_URL);
+      else if (os === "ios") redirectNow(IOS_URL);
+      else redirectNow(WEB_URL);
     });
   </script>
 </head>
-
 <body>
-  <div class="wrap">
-    <p id="msg">잠시만 기다려 주세요... 앱 스토어로 연결 중입니다.</p>
-
-    <div id="buttons" style="display:none;">
-      https://play.google.com/store/apps/details?id=com.iwilldrive.androidGoogle Play로 이동</a>
-      https://apps.apple.com/kr/app/%EC%9A%B4%EC%A0%84%EA%B2%B0%EC%8B%AC/id1532367997App Store로 이동</a>
-      https://www.iwilldrive.co.kr/웹에서 보기</a>
-      <small>자동 이동이 되지 않으면 버튼을 눌러주세요.</small>
-    </div>
-  </div>
+  <p>연결 중입니다…</p>
 </body>
 </html>
-``
